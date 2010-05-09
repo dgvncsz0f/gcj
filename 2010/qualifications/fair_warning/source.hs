@@ -1,6 +1,6 @@
 module Main where
 
-import Data.List (foldl')
+import Data.List (foldl',sort)
 import Control.Monad (foldM_)
 
 gcds :: (Integral n) => [n] -> n
@@ -9,12 +9,13 @@ gcds = foldl' fixed_gcd 0
         fixed_gcd a b = gcd a b
 
 apocalypse :: [Integer] -> Integer
-apocalypse xs = solve . gcds . diff $ xs
-  where  diff (y:ys) = map (y-) ys ++ diff ys
-         diff []     = []
+apocalypse xs0 = solve . gcds $ diff
+  where  (x:xs) = sort xs0
 
-         solve n = gcds $ map offset xs
-           where offset x = n - (x `mod` n)
+         diff = map (abs.(`subtract` x)) xs
+
+         solve n | x `mod` n == 0 = 0 
+                 | otherwise      = n - (x `mod` n)
 
 main :: IO ()
 main = do (t:ts) <- fmap lines getContents
