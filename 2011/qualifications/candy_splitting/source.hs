@@ -18,7 +18,7 @@ seanPiles xs
 
 main :: IO ()
 main = do { t <- fmap read getLine
-          ; replicateM t parseInput >>= foldM_ (\k xs -> exec k xs >> return (k+1)) 1
+          ; mapM_ (\k -> parseInput >>= \xs -> exec k xs) [1..t]
           }
   where parseInput = do { n  <- fmap read getLine
                         ; fmap (map read . take n . words) getLine

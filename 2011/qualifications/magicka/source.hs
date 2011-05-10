@@ -62,8 +62,8 @@ parseBase (x:xs) = (drop 2 xs, baseL)
         baseL = take n (head xs)
 
 main :: IO ()
-main = do { n <- fmap read getLine
-          ; replicateM n getLine >>= foldM_ (\n line -> myPrint n (myExec line) >> return (n+1)) 1
+main = do { t <- fmap read getLine
+          ; mapM_ (\k -> getLine >>= \xs -> myPrint k (myExec xs)) [1..t]
           }
   where myExec xs = let input = words xs
                         (input',cdb)  = parseComposition input
@@ -76,3 +76,4 @@ main = do { n <- fmap read getLine
                              ; putStr ": "
                              ; putStrLn (showBaseL baseL)
                              }
+

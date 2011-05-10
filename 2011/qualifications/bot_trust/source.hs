@@ -65,7 +65,7 @@ parseInput line = parseF (read n) ws id $ []
 
 main :: IO ()
 main = do { t <- fmap read getLine
-          ; replicateM t (fmap parseInput getLine) >>= foldM_ (\k xs -> exec k xs >> return (k+1)) 1
+          ; mapM_ (\k -> fmap parseInput getLine >>= \xs -> exec k xs) [1..t]
           }
   where exec :: Int -> [(BotHandle, Button)] -> IO ()
         exec k moves = let g = sequence_ (map update moves) >> getTime
