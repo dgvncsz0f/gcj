@@ -47,13 +47,12 @@ putTime t = get >>= \g -> put (g { time = t})
 getTime :: State GameState Time
 getTime = get >>= return . time
 
-update :: (BotHandle,Button) -> State GameState Time
+update :: (BotHandle,Button) -> State GameState ()
 update (bot,x) = do { pushTime <- timeToPush (bot,x)
                     ; curTime  <- getTime
                     ; let nowTime = max pushTime curTime
                       in do { putBot (bot, Bot x pushTime)
                             ; putTime nowTime
-                            ; return nowTime
                             }
                     }
 
