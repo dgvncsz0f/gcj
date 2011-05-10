@@ -7,18 +7,15 @@ type Button = Int
 type Time = Int
 
 data BotHandle = A | B
-               deriving (Show)
 
 data GameState = GameState { botA :: Bot
                            , botB :: Bot
                            , time :: Time
                            }
-               deriving (Show)
 
 data Bot = Bot { button  :: Button
                , botTime :: Time
                }
-         deriving (Show)
 
 ginit :: GameState
 ginit = GameState (Bot 1 0) (Bot 1 0) 0
